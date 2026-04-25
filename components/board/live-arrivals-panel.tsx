@@ -87,16 +87,16 @@ function toDirectionName(label: string) {
   return label;
 }
 
-function toDirectionLabel(label: string): "E" | "W" | string {
+function toDirectionLabel(label: string): string {
   if (/^e/i.test(label)) {
-    return "E";
+    return "East";
   }
 
   if (/^w/i.test(label)) {
-    return "W";
+    return "West";
   }
 
-  return label.slice(0, 1).toUpperCase();
+  return label;
 }
 
 function toBusBoxItem(prediction: NormalizedBusStopPrediction): BusBoxItem {

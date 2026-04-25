@@ -70,10 +70,10 @@ textarea {
 .display-bus-grid {
   display: grid;
   flex: 1 1 auto;
-  gap: var(--space-16);
+  gap: 0;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   min-height: 0;
-  padding: var(--space-16) var(--space-24);
+  padding: 0;
 }
 
 .display-bus-box {
@@ -84,7 +84,11 @@ textarea {
   display: grid;
   grid-template-rows: auto 1fr;
   min-height: 0;
-  padding: var(--space-16) var(--space-20);
+  padding: 0;
+}
+
+.display-bus-box + .display-bus-box {
+  border-left: 2px solid var(--color-arrival-divider);
 }
 
 .display-bus-box--empty {
@@ -101,8 +105,11 @@ textarea {
   font-family: var(--font-family-ui);
   font-size: var(--font-size-40);
   font-weight: var(--font-weight-bold);
+  justify-self: center;
   letter-spacing: -0.03em;
   line-height: 1;
+  padding-top: var(--space-8);
+  text-align: center;
 }
 
 .display-bus-box__eta {
@@ -124,7 +131,7 @@ textarea {
 
 .display-bus-box__eta-unit {
   font-family: var(--font-family-ui);
-  font-size: var(--font-size-24);
+  font-size: var(--font-size-32);
   font-weight: var(--font-weight-regular);
   letter-spacing: -0.02em;
   line-height: 0.95;
