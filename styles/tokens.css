@@ -7,6 +7,7 @@
   /* Official CTA brand-reference tokens */
   --color-cta-red: #c60c30;
   --color-cta-blue: #00a1de;
+  --color-cta-bus: #00a1de;
   --color-cta-brown: #62361b;
   --color-cta-green: #009b3a;
   --color-cta-orange: #f9461c;
@@ -25,6 +26,8 @@
   --color-line-pink: var(--color-cta-pink);
   --color-line-yellow: var(--color-cta-yellow);
   --color-ui-sign-grey: var(--color-cta-sign-grey);
+  --color-bus-box-bg: var(--color-cta-bus);
+  --color-bus-box-fg: var(--color-neutral-0);
 
   /* Neutral palette */
   --color-neutral-950: #17191a;

@@ -4,6 +4,11 @@ import { useEffect, useRef, useState } from "react";
 
 import { DISPLAY_CONFIG } from "../../lib/config";
 import type {
+  ApiBusPredictionsResponse,
+  ApiBusPredictionsSuccessResponse,
+  NormalizedBusStopPrediction,
+} from "../../lib/bus/types";
+import type {
   ApiArrivalsResponse,
   ApiArrivalsSuccessResponse,
   NormalizedArrival,
@@ -14,6 +19,7 @@ import type {
   WeatherSummary,
 } from "../../lib/weather/types";
 import ArrivalStack, { type ArrivalStackItem } from "./arrival-stack";
+import BusBoxGrid, { type BusBoxItem } from "./bus-box-grid";
 
 const CLOCK_FORMATTER = new Intl.DateTimeFormat("en-US", {
   hour: "numeric",
@@ -69,8 +75,63 @@ function getErrorMessage(response: Response, body: ApiArrivalsResponse | null) {
   return `Arrivals request failed with status ${response.status}.`;
 }
 
+function toDirectionName(label: string) {
+  if (/^e/i.test(label)) {
+    return "Eastbound";
+  }
+
+  if (/^w/i.test(label)) {
+    return "Westbound";
+  }
+
+  return label;
+}
+
+function toDirectionLabel(label: string): "E" | "W" | string {
+  if (/^e/i.test(label)) {
+    return "E";
+  }
+
+  if (/^w/i.test(label)) {
+    return "W";
+  }
+
+  return label.slice(0, 1).toUpperCase();
+}
+
+function toBusBoxItem(prediction: NormalizedBusStopPrediction): BusBoxItem {
+  return {
+    id: prediction.stopId,
+    directionLabel: toDirectionLabel(prediction.cardLabel),
+    directionName: toDirectionName(prediction.cardLabel),
+    etaValue: prediction.etaValue,
+    etaUnit: prediction.etaUnit,
+    hasPrediction: prediction.hasPrediction,
+  };
+}
+
+function getBusErrorMessage(response: Response, body: ApiBusPredictionsResponse | null) {
+  if (body && !body.ok) {
+    return body.error;
+  }
+
+  return `Bus request failed with status ${response.status}.`;
+}
+
+function getInitialBusBoxes(): BusBoxItem[] {
+  return DISPLAY_CONFIG.bus.stops.map((stop) => ({
+    id: stop.stopId,
+    directionLabel: toDirectionLabel(stop.cardLabel),
+    directionName: toDirectionName(stop.cardLabel),
+    etaValue: "--",
+    etaUnit: null,
+    hasPrediction: false,
+  }));
+}
+
 export function LiveArrivalsPanel() {
   const [arrivals, setArrivals] = useState<ArrivalStackItem[]>([]);
+  const [busBoxes, setBusBoxes] = useState<BusBoxItem[]>(() => getInitialBusBoxes());
   const [emptyMessage, setEmptyMessage] = useState("Loading live arrivals...");
   const [clockLabel, setClockLabel] = useState(() => formatTimeLabel(new Date()));
   const [weatherDisplay, setWeatherDisplay] = useState<WeatherDisplay | null>(null);
@@ -80,6 +141,8 @@ export function LiveArrivalsPanel() {
   const lastGoodUpdateLabelRef = useRef<string | null>(null);
   const hasLoadedWeatherSuccessfullyRef = useRef(false);
   const lastGoodWeatherRef = useRef<WeatherDisplay | null>(null);
+  const hasLoadedBusSuccessfullyRef = useRef(false);
+  const lastGoodBusBoxesRef = useRef<BusBoxItem[]>(getInitialBusBoxes());
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -215,6 +278,56 @@ export function LiveArrivalsPanel() {
     };
   }, []);
 
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadBuses() {
+      try {
+        const response = await fetch("/api/buses", {
+          cache: "no-store",
+        });
+        const body = (await response.json()) as ApiBusPredictionsResponse;
+
+        if (!response.ok || !body.ok) {
+          throw new Error(getBusErrorMessage(response, body));
+        }
+
+        if (!isActive) {
+          return;
+        }
+
+        const successfulBody = body as ApiBusPredictionsSuccessResponse;
+        const nextBusBoxes = successfulBody.predictions.map(toBusBoxItem);
+
+        setBusBoxes(nextBusBoxes);
+        hasLoadedBusSuccessfullyRef.current = true;
+        lastGoodBusBoxesRef.current = nextBusBoxes;
+      } catch {
+        if (!isActive) {
+          return;
+        }
+
+        if (hasLoadedBusSuccessfullyRef.current) {
+          setBusBoxes(lastGoodBusBoxesRef.current);
+          return;
+        }
+
+        setBusBoxes(getInitialBusBoxes());
+      }
+    }
+
+    void loadBuses();
+
+    const intervalId = window.setInterval(() => {
+      void loadBuses();
+    }, DISPLAY_CONFIG.bus.refreshIntervalMs);
+
+    return () => {
+      isActive = false;
+      window.clearInterval(intervalId);
+    };
+  }, []);
+
   return (
     <>
       <ArrivalStack
@@ -224,6 +337,8 @@ export function LiveArrivalsPanel() {
         compact
         emptyMessage={emptyMessage}
       />
+
+      <BusBoxGrid boxes={busBoxes} />
 
       <footer className="display-footer" aria-label="Board footer">
         <div className="display-footer__left">

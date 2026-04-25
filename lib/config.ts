@@ -81,6 +81,24 @@ export const DISPLAY_CONFIG = {
     maxRows: 4,
     refreshIntervalMs: 15_000,
   },
+  bus: {
+    routeCode: "152",
+    routeLabel: "Addison Bus",
+    refreshIntervalMs: 15_000,
+    topPredictions: 4,
+    stops: [
+      {
+        stopId: "12535",
+        cardLabel: "East",
+        stopName: "Addison & Paulina",
+      },
+      {
+        stopId: "12563",
+        cardLabel: "West",
+        stopName: "Brown Line Station",
+      },
+    ],
+  },
   weather: {
     latitude: 41.94702,
     longitude: -87.67474,
