@@ -32,7 +32,7 @@ export function ArrivalRow({
   const rowStyle = {
     "--arrival-row-bg": routeColor,
     "--arrival-row-fg": textColor,
-    "--arrival-row-copy": copyColor,
+    "--arrival-row-copy": mutedEta ? "var(--color-text-muted)" : copyColor,
     "--arrival-row-eta-color": mutedEta ? "var(--color-text-muted)" : textColor,
     ...style,
   } as CSSProperties;
