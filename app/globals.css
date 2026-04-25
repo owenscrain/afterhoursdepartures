@@ -167,7 +167,7 @@ textarea {
   color: var(--color-text-primary);
   display: flex;
   flex-wrap: wrap;
-  gap: 0 var(--space-16);
+  gap: 0 var(--space-20);
   line-height: 1.05;
   margin: 0;
 }
@@ -176,14 +176,15 @@ textarea {
   color: var(--color-text-primary);
   display: block;
   flex: 0 0 auto;
-  height: 32px;
-  width: 32px;
+  height: 44px;
+  width: 44px;
 }
 
 .display-footer__weather-current {
-  font-size: var(--font-size-32);
+  font-size: var(--font-size-48);
   font-weight: var(--font-weight-bold);
   letter-spacing: -0.03em;
+  line-height: 1;
 }
 
 .display-footer__weather-empty {
