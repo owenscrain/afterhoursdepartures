@@ -27,6 +27,7 @@ const CLOCK_FORMATTER = new Intl.DateTimeFormat("en-US", {
   hour12: true,
   timeZone: DISPLAY_CONFIG.timezone,
 });
+const WEATHER_ICON_ASSET_VERSION = "2";
 
 function formatTimeLabel(value: string | number | Date) {
   return CLOCK_FORMATTER.format(new Date(value));
@@ -34,21 +35,49 @@ function formatTimeLabel(value: string | number | Date) {
 
 type WeatherDisplay = {
   current: string;
-  range: string | null;
   condition: string;
+  iconPath: string;
+  weatherCode: number;
 };
 
-function formatWeatherDisplay(weather: WeatherSummary): WeatherDisplay {
-  const current = `${weather.temperature}\u00b0`;
-  const range =
-    weather.highTemperature !== null && weather.lowTemperature !== null
-      ? `H ${weather.highTemperature}\u00b0  L ${weather.lowTemperature}\u00b0`
-      : null;
+function getWeatherIconPath(weatherCode: number) {
+  if (weatherCode === 0 || weatherCode === 1) {
+    return "/icons/weather/clear.svg";
+  }
 
+  if (weatherCode === 2) {
+    return "/icons/weather/partly-cloudy.svg";
+  }
+
+  if (weatherCode === 3) {
+    return "/icons/weather/cloudy.svg";
+  }
+
+  if (weatherCode === 45 || weatherCode === 48) {
+    return "/icons/weather/fog.svg";
+  }
+
+  if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(weatherCode)) {
+    return "/icons/weather/rain.svg";
+  }
+
+  if ([71, 73, 75, 77, 85, 86].includes(weatherCode)) {
+    return "/icons/weather/snow.svg";
+  }
+
+  if ([95, 96, 99].includes(weatherCode)) {
+    return "/icons/weather/thunderstorm.svg";
+  }
+
+  return "/icons/weather/unknown.svg";
+}
+
+function formatWeatherDisplay(weather: WeatherSummary): WeatherDisplay {
   return {
-    current,
-    range,
+    current: `${weather.temperature}\u00b0`,
     condition: weather.conditionLabel,
+    iconPath: getWeatherIconPath(weather.weatherCode),
+    weatherCode: weather.weatherCode,
   };
 }
 
@@ -135,7 +164,6 @@ export function LiveArrivalsPanel() {
   const [emptyMessage, setEmptyMessage] = useState("Loading live arrivals...");
   const [clockLabel, setClockLabel] = useState(() => formatTimeLabel(new Date()));
   const [weatherDisplay, setWeatherDisplay] = useState<WeatherDisplay | null>(null);
-  const [statusLabel, setStatusLabel] = useState("Loading live arrivals...");
   const hasLoadedSuccessfullyRef = useRef(false);
   const lastGoodArrivalsRef = useRef<ArrivalStackItem[]>([]);
   const lastGoodUpdateLabelRef = useRef<string | null>(null);
@@ -157,7 +185,7 @@ export function LiveArrivalsPanel() {
   useEffect(() => {
     let isActive = true;
 
-    async function loadArrivals(isBackgroundRefresh: boolean) {
+    async function loadArrivals() {
       try {
         const response = await fetch("/api/arrivals", {
           cache: "no-store",
@@ -178,16 +206,11 @@ export function LiveArrivalsPanel() {
 
         setArrivals(nextArrivals);
         setEmptyMessage("No live arrivals available right now.");
-        setStatusLabel(
-          isBackgroundRefresh
-            ? `Updated ${updatedLabel}`
-            : `Live arrivals updated ${updatedLabel}`,
-        );
 
         hasLoadedSuccessfullyRef.current = true;
         lastGoodArrivalsRef.current = nextArrivals;
         lastGoodUpdateLabelRef.current = updatedLabel;
-      } catch (error) {
+      } catch {
         if (!isActive) {
           return;
         }
@@ -195,29 +218,18 @@ export function LiveArrivalsPanel() {
         if (hasLoadedSuccessfullyRef.current) {
           setArrivals(lastGoodArrivalsRef.current);
           setEmptyMessage("No live arrivals available right now.");
-          setStatusLabel(
-            lastGoodUpdateLabelRef.current
-              ? `Connection issue. Showing ${lastGoodUpdateLabelRef.current} update.`
-              : "Connection issue. Showing last good arrivals.",
-          );
           return;
         }
 
-        const message =
-          error instanceof Error
-            ? error.message
-            : "Unable to load live arrivals.";
-
         setArrivals([]);
         setEmptyMessage("Unable to load live arrivals.");
-        setStatusLabel(message);
       }
     }
 
-    void loadArrivals(false);
+    void loadArrivals();
 
     const intervalId = window.setInterval(() => {
-      void loadArrivals(true);
+      void loadArrivals();
     }, DISPLAY_CONFIG.arrivals.refreshIntervalMs);
 
     return () => {
@@ -343,17 +355,23 @@ export function LiveArrivalsPanel() {
       <footer className="display-footer" aria-label="Board footer">
         <div className="display-footer__left">
           {weatherDisplay ? (
-            <p className="display-footer__weather" aria-label="Current weather">
+            <div
+              className="display-footer__weather"
+              aria-label={`Current weather ${weatherDisplay.current}, ${weatherDisplay.condition}`}
+            >
+              <img
+                aria-hidden="true"
+                alt=""
+                className="display-footer__weather-icon"
+                height="32"
+                src={`${weatherDisplay.iconPath}?v=${WEATHER_ICON_ASSET_VERSION}`}
+                width="32"
+              />
               <span className="display-footer__weather-current">{weatherDisplay.current}</span>
-              {weatherDisplay.range ? (
-                <span className="display-footer__weather-range">{weatherDisplay.range}</span>
-              ) : null}
-              <span className="display-footer__weather-condition">{weatherDisplay.condition}</span>
-            </p>
+            </div>
           ) : (
             <p className="display-footer__weather-empty">Weather unavailable</p>
           )}
-          <p className="display-footer__status">{statusLabel}</p>
         </div>
         <p className="display-footer__copy display-footer__copy--clock">{clockLabel}</p>
       </footer>
