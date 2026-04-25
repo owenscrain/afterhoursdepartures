@@ -57,8 +57,6 @@ function toStackItem(arrival: NormalizedArrival): ArrivalStackItem {
     etaUnit: arrival.etaUnit,
     textColor: "var(--color-text-on-route)",
     copyColor: "var(--color-text-secondary)",
-    signalColor: "var(--color-text-on-route)",
-    showSignal: !arrival.isScheduled,
     statusBadgeLabel: arrival.statusBadgeLabel,
   };
 }

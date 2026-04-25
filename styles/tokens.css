@@ -76,14 +76,14 @@
 
   --font-station-label: var(--font-size-24);
   --font-section-title: var(--font-size-24);
-  --font-header-title: var(--font-size-40);
+  --font-header-title: var(--font-size-48);
   --font-clock: var(--font-size-40);
-  --font-arrival-meta: var(--font-size-20);
-  --font-arrival-destination: var(--font-size-48);
+  --font-arrival-meta: var(--font-size-24);
+  --font-arrival-destination: var(--font-size-64);
   --font-arrival-eta: var(--font-size-48);
-  --font-arrival-eta-number: var(--font-size-48);
+  --font-arrival-eta-number: var(--font-size-64);
   --font-arrival-eta-unit: var(--font-size-40);
-  --font-status-text: var(--font-size-18);
+  --font-status-text: var(--font-size-20);
   --font-legal: var(--font-size-12);
 
   /* Spacing */
@@ -139,7 +139,7 @@
   --arrival-row-padding-x: var(--space-24);
   --arrival-row-padding-y: var(--space-16);
   --arrival-row-divider: 2px;
-  --arrival-row-eta-min-width: 240px;
+  --arrival-row-eta-min-width: 260px;
   --arrival-meta-gap: 6px;
   --arrival-cluster-gap: var(--space-12);
   --arrival-right-padding: var(--space-24);

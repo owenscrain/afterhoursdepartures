@@ -10,8 +10,6 @@ export type ArrivalStackItem = {
   etaUnit?: string | null;
   textColor?: string;
   copyColor?: string;
-  signalColor?: string;
-  showSignal?: boolean;
   statusBadgeLabel?: string | null;
 };
 
@@ -52,8 +50,6 @@ export function ArrivalStack({
             etaSecondary={arrival.etaUnit ?? undefined}
             textColor={arrival.textColor}
             copyColor={arrival.copyColor}
-            signalColor={arrival.signalColor}
-            showSignal={arrival.showSignal}
             statusBadgeLabel={arrival.statusBadgeLabel ?? undefined}
           />
         ))

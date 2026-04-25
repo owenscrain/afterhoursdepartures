@@ -7,7 +7,6 @@
   --arrival-row-bg: var(--color-line-brown);
   --arrival-row-fg: var(--color-text-on-route);
   --arrival-row-copy: var(--color-text-secondary);
-  --arrival-row-signal: var(--arrival-row-fg);
   align-items: center;
   background: var(--arrival-row-bg);
   color: var(--arrival-row-fg);
@@ -22,25 +21,13 @@
 .board-arrival-row__left {
   display: flex;
   flex-direction: column;
-  gap: var(--arrival-meta-gap);
   min-width: 0;
 }
 
-.board-arrival-row__meta,
 .board-arrival-row__destination,
 .board-arrival-row__eta-primary,
 .board-arrival-row__eta-secondary {
   margin: 0;
-}
-
-.board-arrival-row__meta {
-  color: var(--arrival-row-copy);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-arrival-meta);
-  font-weight: var(--font-weight-regular);
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-  white-space: nowrap;
 }
 
 .board-arrival-row__destination {
@@ -91,16 +78,6 @@
   font-weight: var(--font-weight-regular);
   letter-spacing: -0.03em;
   line-height: 0.95;
-}
-
-.board-arrival-row__signal {
-  color: var(--arrival-row-signal);
-  flex: 0 0 auto;
-  height: var(--icon-size-status-glyph);
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-width: 1.9;
-  width: var(--icon-size-status-glyph);
 }
 
 .board-arrival-row__status-badge {

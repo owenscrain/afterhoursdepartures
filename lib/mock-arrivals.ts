@@ -9,8 +9,6 @@ export const ADDISON_PREVIEW_ARRIVALS = [
     etaUnit: "min",
     textColor: "var(--color-text-on-route)",
     copyColor: "var(--color-text-secondary)",
-    signalColor: "var(--color-text-on-route)",
-    showSignal: true,
   },
   {
     id: "brn-412-loop",
@@ -22,8 +20,6 @@ export const ADDISON_PREVIEW_ARRIVALS = [
     etaUnit: "min",
     textColor: "var(--color-text-on-route)",
     copyColor: "var(--color-text-secondary)",
-    signalColor: "var(--color-text-on-route)",
-    showSignal: true,
   },
   {
     id: "brn-404-kimball",
@@ -35,8 +31,6 @@ export const ADDISON_PREVIEW_ARRIVALS = [
     etaUnit: "min",
     textColor: "var(--color-text-on-route)",
     copyColor: "var(--color-text-secondary)",
-    signalColor: "var(--color-text-on-route)",
-    showSignal: true,
   },
   {
     id: "brn-405-loop",
@@ -48,7 +42,5 @@ export const ADDISON_PREVIEW_ARRIVALS = [
     etaUnit: "min",
     textColor: "var(--color-text-on-route)",
     copyColor: "var(--color-text-secondary)",
-    signalColor: "var(--color-text-on-route)",
-    showSignal: true,
   },
 ] as const;
