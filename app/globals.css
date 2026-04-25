@@ -99,9 +99,9 @@ textarea {
 
 .display-bus-box__direction {
   font-family: var(--font-family-ui);
-  font-size: var(--font-size-24);
+  font-size: var(--font-size-40);
   font-weight: var(--font-weight-bold);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   line-height: 1;
 }
 
