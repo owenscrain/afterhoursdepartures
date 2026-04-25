@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arrival Row Preview</title>
+    <link rel="stylesheet" href="../styles/tokens.css" />
+    <link rel="stylesheet" href="../styles/board.css" />
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--color-bg-app);
+        color: var(--color-text-primary);
+        font-family: var(--font-family-ui);
+      }
+      body {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        padding: 32px;
+      }
+      .preview-shell {
+        background: var(--color-bg-board);
+        box-shadow: var(--shadow-none);
+        width: min(1720px, calc(100vw - 64px));
+      }
+    </style>
+  </head>
+  <body>
+    <main class="preview-shell" aria-label="Arrival row preview">
+      <article
+        class="board-arrival-row"
+        style="--arrival-row-bg: var(--color-line-brown); --arrival-row-fg: var(--color-text-on-route); --arrival-row-copy: var(--color-text-secondary); --arrival-row-signal: var(--color-text-on-route);"
+        aria-label="Brown Line #411 to Kimball, 8 min"
+      >
+        <div class="board-arrival-row__left">
+          <p class="board-arrival-row__meta">Brown Line #411 to</p>
+          <p class="board-arrival-row__destination">Kimball</p>
+        </div>
+
+        <div class="board-arrival-row__right">
+          <div class="board-arrival-row__eta-line u-tabular-nums">
+            <span class="board-arrival-row__eta-primary">8</span>
+            <span class="board-arrival-row__eta-secondary">min</span>
+            <svg aria-hidden="true" class="board-arrival-row__signal" viewBox="0 0 24 24" fill="none">
+              <path d="M5 18a13 13 0 0 1 13-13"></path>
+              <path d="M9 18a9 9 0 0 1 9-9"></path>
+              <path d="M13 18a5 5 0 0 1 5-5"></path>
+            </svg>
+          </div>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>

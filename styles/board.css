@@ -1,0 +1,141 @@
+/*
+  Board-specific styles for the CTA display MVP.
+  Import this after styles/tokens.css.
+*/
+
+.board-arrival-row {
+  --arrival-row-bg: var(--color-line-brown);
+  --arrival-row-fg: var(--color-text-on-route);
+  --arrival-row-copy: var(--color-text-secondary);
+  --arrival-row-signal: var(--arrival-row-fg);
+  align-items: center;
+  background: var(--arrival-row-bg);
+  color: var(--arrival-row-fg);
+  display: grid;
+  gap: var(--space-16);
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: var(--arrival-row-min-height);
+  padding: var(--arrival-row-padding-y) var(--arrival-row-padding-x);
+  width: 100%;
+}
+
+.board-arrival-row__left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--arrival-meta-gap);
+  min-width: 0;
+}
+
+.board-arrival-row__meta,
+.board-arrival-row__destination,
+.board-arrival-row__eta-primary,
+.board-arrival-row__eta-secondary {
+  margin: 0;
+}
+
+.board-arrival-row__meta {
+  color: var(--arrival-row-copy);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-arrival-meta);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+.board-arrival-row__destination {
+  color: var(--arrival-row-copy);
+  font-family: var(--font-family-display);
+  font-size: var(--font-arrival-destination);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.board-arrival-row__right {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: var(--arrival-badge-gap);
+  justify-content: center;
+  min-width: var(--arrival-row-eta-min-width);
+}
+
+.board-arrival-row__eta-line {
+  align-items: center;
+  color: inherit;
+  display: inline-flex;
+  gap: var(--arrival-cluster-gap);
+  justify-content: flex-end;
+  line-height: 1;
+  min-height: calc(var(--font-arrival-eta-number) + var(--space-4));
+  white-space: nowrap;
+}
+
+.board-arrival-row__eta-primary {
+  color: inherit;
+  font-family: var(--font-family-display);
+  font-size: var(--font-arrival-eta-number);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.05em;
+  line-height: 0.92;
+}
+
+.board-arrival-row__eta-secondary {
+  color: inherit;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-arrival-eta-unit);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.board-arrival-row__signal {
+  color: var(--arrival-row-signal);
+  flex: 0 0 auto;
+  height: var(--icon-size-status-glyph);
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.9;
+  width: var(--icon-size-status-glyph);
+}
+
+.board-arrival-row__status-badge {
+  align-self: flex-end;
+}
+
+.board-arrival-stack {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.board-arrival-stack__empty {
+  align-items: center;
+  background: var(--color-bg-panel);
+  color: var(--color-text-secondary);
+  display: flex;
+  justify-content: center;
+  min-height: var(--arrival-row-height-compact);
+  padding: var(--space-24);
+  text-align: center;
+}
+
+.board-arrival-stack__empty-text {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-20);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.board-arrival-stack > .board-arrival-row + .board-arrival-row {
+  border-top: var(--arrival-row-divider) solid var(--arrival-divider-color);
+}
+
+.board-arrival-stack--compact > .board-arrival-row {
+  min-height: var(--arrival-row-height-compact);
+}
