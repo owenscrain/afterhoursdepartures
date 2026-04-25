@@ -10,7 +10,7 @@ export type ArrivalStackItem = {
   etaUnit?: string | null;
   textColor?: string;
   copyColor?: string;
-  statusBadgeLabel?: string | null;
+  mutedEta?: boolean;
 };
 
 export type ArrivalStackProps = {
@@ -50,7 +50,7 @@ export function ArrivalStack({
             etaSecondary={arrival.etaUnit ?? undefined}
             textColor={arrival.textColor}
             copyColor={arrival.copyColor}
-            statusBadgeLabel={arrival.statusBadgeLabel ?? undefined}
+            mutedEta={arrival.mutedEta}
           />
         ))
       ) : (

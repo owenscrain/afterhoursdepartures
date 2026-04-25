@@ -9,7 +9,7 @@ export type ArrivalRowProps = {
   runNumber?: number | string;
   textColor?: string;
   copyColor?: string;
-  statusBadgeLabel?: string;
+  mutedEta?: boolean;
   className?: string;
   style?: CSSProperties;
 };
@@ -23,7 +23,7 @@ export function ArrivalRow({
   runNumber,
   textColor = "var(--color-text-on-route)",
   copyColor = "var(--color-text-secondary)",
-  statusBadgeLabel,
+  mutedEta = false,
   className,
   style,
 }: ArrivalRowProps) {
@@ -33,12 +33,13 @@ export function ArrivalRow({
     "--arrival-row-bg": routeColor,
     "--arrival-row-fg": textColor,
     "--arrival-row-copy": copyColor,
+    "--arrival-row-eta-color": mutedEta ? "var(--color-text-muted)" : textColor,
     ...style,
   } as CSSProperties;
 
   return (
     <article
-      aria-label={`${spokenRouteText} to ${destination}, ${etaPrimary}${etaSecondary ? ` ${etaSecondary}` : ""}${statusBadgeLabel ? `, ${statusBadgeLabel}` : ""}`}
+      aria-label={`${spokenRouteText} to ${destination}, ${etaPrimary}${etaSecondary ? ` ${etaSecondary}` : ""}${mutedEta ? ", scheduled" : ""}`}
       className={composedClassName}
       style={rowStyle}
     >
@@ -54,12 +55,6 @@ export function ArrivalRow({
             <span className="board-arrival-row__eta-secondary">{etaSecondary}</span>
           ) : null}
         </div>
-
-        {statusBadgeLabel ? (
-          <span className="board-arrival-row__status-badge u-status-badge">
-            {statusBadgeLabel}
-          </span>
-        ) : null}
       </div>
     </article>
   );

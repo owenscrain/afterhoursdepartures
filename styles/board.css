@@ -7,6 +7,7 @@
   --arrival-row-bg: var(--color-line-brown);
   --arrival-row-fg: var(--color-text-on-route);
   --arrival-row-copy: var(--color-text-secondary);
+  --arrival-row-eta-color: var(--arrival-row-fg);
   align-items: center;
   background: var(--arrival-row-bg);
   color: var(--arrival-row-fg);
@@ -53,7 +54,7 @@
 
 .board-arrival-row__eta-line {
   align-items: center;
-  color: inherit;
+  color: var(--arrival-row-eta-color);
   display: inline-flex;
   gap: var(--arrival-cluster-gap);
   justify-content: flex-end;
@@ -78,10 +79,6 @@
   font-weight: var(--font-weight-regular);
   letter-spacing: -0.03em;
   line-height: 0.95;
-}
-
-.board-arrival-row__status-badge {
-  align-self: flex-end;
 }
 
 .board-arrival-stack {
