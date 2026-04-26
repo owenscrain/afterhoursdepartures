@@ -30,9 +30,44 @@ const CLOCK_FORMATTER = new Intl.DateTimeFormat("en-US", {
   hour12: true,
   timeZone: DISPLAY_CONFIG.timezone,
 });
+const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+  timeZone: DISPLAY_CONFIG.timezone,
+});
 
 function formatTimeLabel(value: string | number | Date) {
   return CLOCK_FORMATTER.format(new Date(value));
+}
+
+function formatDateLabel(value: string | number | Date) {
+  const date = new Date(value);
+  const parts = DATE_FORMATTER.formatToParts(date);
+  const weekday = parts.find((part) => part.type === "weekday")?.value ?? "";
+  const month = parts.find((part) => part.type === "month")?.value ?? "";
+  const day = date.getDate();
+
+  return `${weekday}, ${month} ${formatOrdinalDay(day)}`;
+}
+
+function formatOrdinalDay(day: number) {
+  const remainder = day % 100;
+
+  if (remainder >= 11 && remainder <= 13) {
+    return `${day}th`;
+  }
+
+  switch (day % 10) {
+    case 1:
+      return `${day}st`;
+    case 2:
+      return `${day}nd`;
+    case 3:
+      return `${day}rd`;
+    default:
+      return `${day}th`;
+  }
 }
 
 type WeatherDisplay = WeatherCardDisplay;
@@ -129,6 +164,7 @@ export function LiveArrivalsPanel() {
   const [busBoxes, setBusBoxes] = useState<BusBoxItem[]>(() => getInitialBusBoxes());
   const [emptyMessage, setEmptyMessage] = useState("Loading live arrivals...");
   const [clockLabel, setClockLabel] = useState(() => formatTimeLabel(new Date()));
+  const [dateLabel, setDateLabel] = useState(() => formatDateLabel(new Date()));
   const [weatherDisplay, setWeatherDisplay] = useState<WeatherDisplay | null>(null);
   const hasLoadedSuccessfullyRef = useRef(false);
   const lastGoodArrivalsRef = useRef<ArrivalStackItem[]>([]);
@@ -139,7 +175,9 @@ export function LiveArrivalsPanel() {
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
-      setClockLabel(formatTimeLabel(new Date()));
+      const now = new Date();
+      setClockLabel(formatTimeLabel(now));
+      setDateLabel(formatDateLabel(now));
     }, 1_000);
 
     return () => {
@@ -319,6 +357,7 @@ export function LiveArrivalsPanel() {
       </section>
 
       <footer className="display-footer" aria-label="Board footer">
+        <p className="display-footer__copy display-footer__copy--date">{dateLabel}</p>
         <p className="display-footer__copy display-footer__copy--clock u-tabular-nums">
           {clockLabel}
         </p>

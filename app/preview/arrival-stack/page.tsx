@@ -21,7 +21,7 @@ export default function ArrivalStackPreviewPage() {
     <main className="app-shell">
       <section className="display-frame" aria-label="CTA arrival stack preview">
         <header className="display-header" aria-label="Station header">
-          <h1 className="display-header__title">Owen Crain</h1>
+          <h1 className="display-header__title">1742 W Addison</h1>
         </header>
 
         <ArrivalStack
@@ -40,6 +40,9 @@ export default function ArrivalStackPreviewPage() {
         </section>
 
         <footer className="display-footer" aria-label="Board footer">
+          <p className="display-footer__copy display-footer__copy--date">
+            Saturday, April 25th
+          </p>
           <p className="display-footer__copy display-footer__copy--clock u-tabular-nums">
             6:28 PM
           </p>

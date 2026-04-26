@@ -159,6 +159,7 @@
   --support-region-padding-x: var(--space-20);
   --support-region-padding-y: var(--space-12);
   --support-card-gap: var(--space-12);
+  --weather-card-height-compact: 118px;
 
   /* Footer */
   --footer-min-height: 80px;
