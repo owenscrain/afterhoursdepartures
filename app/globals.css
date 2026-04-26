@@ -67,28 +67,46 @@ textarea {
   flex: 0 0 var(--arrival-stack-height-compact);
 }
 
+.display-support-region {
+  background: var(--color-bg-board);
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 var(--support-stack-height-compact);
+  gap: var(--support-card-gap);
+  padding: var(--support-region-padding-y) var(--support-region-padding-x);
+}
+
+.display-support-region > * {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
 .display-bus-grid {
   display: grid;
-  flex: 1 1 auto;
+  flex: 1 1 0;
   gap: 0;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   min-height: 0;
-  padding: var(--space-16) var(--space-24);
+  width: 100%;
 }
 
 .display-bus-box {
   --bus-box-bg: var(--color-bus-box-bg);
   --bus-box-fg: var(--color-bus-box-fg);
+  align-items: center;
   background: var(--bus-box-bg);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   color: var(--bus-box-fg);
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   min-height: 0;
-  padding: 0;
+  padding: var(--space-12) var(--space-16);
+  text-align: center;
 }
 
 .display-bus-box + .display-bus-box {
-  border-left: 2px solid var(--color-arrival-divider);
+  border-left: 2px solid var(--color-support-divider);
 }
 
 .display-bus-box--empty {
@@ -102,20 +120,19 @@ textarea {
 }
 
 .display-bus-box__direction {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-40);
+  color: var(--color-text-on-route);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-32);
   font-weight: var(--font-weight-bold);
-  justify-self: center;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   line-height: 1;
-  padding-top: var(--space-8);
-  text-align: center;
 }
 
 .display-bus-box__eta {
-  align-items: center;
-  display: flex;
-  gap: var(--space-12);
+  align-items: baseline;
+  color: var(--color-text-on-route);
+  display: inline-flex;
+  gap: var(--space-8);
   justify-content: center;
   line-height: 1;
   min-height: 0;
@@ -126,14 +143,14 @@ textarea {
   font-size: var(--font-size-64);
   font-weight: var(--font-weight-bold);
   letter-spacing: -0.05em;
-  line-height: 0.92;
+  line-height: 1;
 }
 
 .display-bus-box__eta-unit {
   font-family: var(--font-family-ui);
   font-size: var(--font-size-32);
   font-weight: var(--font-weight-regular);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   line-height: 0.95;
 }
 
@@ -141,65 +158,24 @@ textarea {
   align-items: center;
   background: var(--color-bg-header);
   display: flex;
-  gap: var(--space-16);
-  justify-content: space-between;
-  min-height: 80px;
-  padding: 0 var(--space-24);
-}
-
-.display-footer__left {
-  align-items: center;
-  display: flex;
-  flex: 1 1 auto;
-  min-width: 0;
+  flex: 0 0 var(--footer-min-height);
+  justify-content: flex-end;
+  margin-top: auto;
+  min-height: var(--footer-min-height);
+  padding: 0 var(--footer-padding-x);
 }
 
 .display-footer__copy {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-20);
-  letter-spacing: -0.02em;
-  margin: 0;
-}
-
-.display-footer__weather,
-.display-footer__weather-empty {
-  align-items: center;
   color: var(--color-text-primary);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 var(--space-20);
-  line-height: 1.05;
-  margin: 0;
-}
-
-.display-footer__weather-icon {
-  color: var(--color-text-primary);
-  display: block;
-  flex: 0 0 auto;
-  height: 44px;
-  width: 44px;
-}
-
-.display-footer__weather-current {
-  font-size: var(--font-size-48);
+  font-family: var(--font-family-display);
+  font-size: var(--font-clock);
   font-weight: var(--font-weight-bold);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   line-height: 1;
-}
-
-.display-footer__weather-empty {
-  color: var(--color-text-primary);
-  font-size: var(--font-size-20);
-  font-weight: var(--font-weight-medium);
-  letter-spacing: -0.01em;
+  margin: 0;
+  white-space: nowrap;
 }
 
 .display-footer__copy--clock {
-  color: var(--color-text-primary);
   flex: 0 0 auto;
-  font-size: var(--font-size-48);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  white-space: nowrap;
 }

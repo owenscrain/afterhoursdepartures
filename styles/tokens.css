@@ -26,7 +26,7 @@
   --color-line-pink: var(--color-cta-pink);
   --color-line-yellow: var(--color-cta-yellow);
   --color-ui-sign-grey: var(--color-cta-sign-grey);
-  --color-bus-box-bg: var(--color-cta-bus);
+  --color-bus-box-bg: var(--color-support-bus);
   --color-bus-box-fg: var(--color-neutral-0);
 
   /* Neutral palette */
@@ -54,6 +54,9 @@
   --color-text-muted: var(--color-neutral-300);
   --color-text-on-route: var(--color-neutral-0);
   --color-arrival-divider: rgba(255, 255, 255, 0.9);
+  --color-support-bus: #4f9ad2;
+  --color-support-weather: #15467d;
+  --color-support-divider: rgba(255, 255, 255, 0.72);
 
   /* Tracker signal asset color */
   --color-icon-signal: #ffd400;
@@ -140,7 +143,7 @@
   /* Arrival board */
   --arrival-row-min-height: 132px;
   --arrival-row-padding-x: var(--space-24);
-  --arrival-row-padding-y: var(--space-16);
+  --arrival-row-padding-y: var(--space-12);
   --arrival-row-divider: 2px;
   --arrival-row-eta-min-width: 260px;
   --arrival-meta-gap: 6px;
@@ -150,11 +153,15 @@
   --arrival-divider-color: rgba(255, 255, 255, 0.9);
   --display-width-compact: 600px;
   --display-height-compact: 1024px;
-  --arrival-stack-height-compact: 614px;
-  --arrival-row-height-compact: 152px;
+  --arrival-stack-height-compact: 550px;
+  --arrival-row-height-compact: 136px;
+  --support-stack-height-compact: 310px;
+  --support-region-padding-x: var(--space-20);
+  --support-region-padding-y: var(--space-12);
+  --support-card-gap: var(--space-12);
 
   /* Footer */
-  --footer-min-height: 72px;
+  --footer-min-height: 80px;
   --footer-padding-x: var(--space-24);
   --footer-padding-y: var(--space-16);
   --footer-gap: var(--space-16);

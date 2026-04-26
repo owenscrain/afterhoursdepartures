@@ -59,7 +59,7 @@ type StationPreset = {
 
 export const CTA_STATION_PRESETS = {
   addisonBrown: {
-    name: "1742 W Addison",
+    name: "Owen Crain",
     mapId: "41440",
     defaultRouteCodes: ["Brn"],
   },

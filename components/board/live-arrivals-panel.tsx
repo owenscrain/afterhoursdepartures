@@ -20,6 +20,9 @@ import type {
 } from "../../lib/weather/types";
 import ArrivalStack, { type ArrivalStackItem } from "./arrival-stack";
 import BusBoxGrid, { type BusBoxItem } from "./bus-box-grid";
+import WeatherSummaryCard, {
+  type WeatherCardDisplay,
+} from "./weather-summary-card";
 
 const CLOCK_FORMATTER = new Intl.DateTimeFormat("en-US", {
   hour: "numeric",
@@ -27,56 +30,19 @@ const CLOCK_FORMATTER = new Intl.DateTimeFormat("en-US", {
   hour12: true,
   timeZone: DISPLAY_CONFIG.timezone,
 });
-const WEATHER_ICON_ASSET_VERSION = "2";
 
 function formatTimeLabel(value: string | number | Date) {
   return CLOCK_FORMATTER.format(new Date(value));
 }
 
-type WeatherDisplay = {
-  current: string;
-  condition: string;
-  iconPath: string;
-  weatherCode: number;
-};
-
-function getWeatherIconPath(weatherCode: number) {
-  if (weatherCode === 0 || weatherCode === 1) {
-    return "/icons/weather/clear.svg";
-  }
-
-  if (weatherCode === 2) {
-    return "/icons/weather/partly-cloudy.svg";
-  }
-
-  if (weatherCode === 3) {
-    return "/icons/weather/cloudy.svg";
-  }
-
-  if (weatherCode === 45 || weatherCode === 48) {
-    return "/icons/weather/fog.svg";
-  }
-
-  if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(weatherCode)) {
-    return "/icons/weather/rain.svg";
-  }
-
-  if ([71, 73, 75, 77, 85, 86].includes(weatherCode)) {
-    return "/icons/weather/snow.svg";
-  }
-
-  if ([95, 96, 99].includes(weatherCode)) {
-    return "/icons/weather/thunderstorm.svg";
-  }
-
-  return "/icons/weather/unknown.svg";
-}
+type WeatherDisplay = WeatherCardDisplay;
 
 function formatWeatherDisplay(weather: WeatherSummary): WeatherDisplay {
   return {
     current: `${weather.temperature}\u00b0`,
+    high: weather.highTemperature !== null ? `${weather.highTemperature}\u00b0` : null,
+    low: weather.lowTemperature !== null ? `${weather.lowTemperature}\u00b0` : null,
     condition: weather.conditionLabel,
-    iconPath: getWeatherIconPath(weather.weatherCode),
     weatherCode: weather.weatherCode,
   };
 }
@@ -166,7 +132,6 @@ export function LiveArrivalsPanel() {
   const [weatherDisplay, setWeatherDisplay] = useState<WeatherDisplay | null>(null);
   const hasLoadedSuccessfullyRef = useRef(false);
   const lastGoodArrivalsRef = useRef<ArrivalStackItem[]>([]);
-  const lastGoodUpdateLabelRef = useRef<string | null>(null);
   const hasLoadedWeatherSuccessfullyRef = useRef(false);
   const lastGoodWeatherRef = useRef<WeatherDisplay | null>(null);
   const hasLoadedBusSuccessfullyRef = useRef(false);
@@ -202,14 +167,12 @@ export function LiveArrivalsPanel() {
 
         const successfulBody = body as ApiArrivalsSuccessResponse;
         const nextArrivals = successfulBody.arrivals.map(toStackItem);
-        const updatedLabel = formatTimeLabel(successfulBody.generatedAt);
 
         setArrivals(nextArrivals);
         setEmptyMessage("No live arrivals available right now.");
 
         hasLoadedSuccessfullyRef.current = true;
         lastGoodArrivalsRef.current = nextArrivals;
-        lastGoodUpdateLabelRef.current = updatedLabel;
       } catch {
         if (!isActive) {
           return;
@@ -350,30 +313,15 @@ export function LiveArrivalsPanel() {
         emptyMessage={emptyMessage}
       />
 
-      <BusBoxGrid boxes={busBoxes} />
+      <section className="display-support-region" aria-label="Bus and weather cards">
+        <BusBoxGrid boxes={busBoxes} />
+        <WeatherSummaryCard weather={weatherDisplay} />
+      </section>
 
       <footer className="display-footer" aria-label="Board footer">
-        <div className="display-footer__left">
-          {weatherDisplay ? (
-            <div
-              className="display-footer__weather"
-              aria-label={`Current weather ${weatherDisplay.current}, ${weatherDisplay.condition}`}
-            >
-              <img
-                aria-hidden="true"
-                alt=""
-                className="display-footer__weather-icon"
-                height="32"
-                src={`${weatherDisplay.iconPath}?v=${WEATHER_ICON_ASSET_VERSION}`}
-                width="32"
-              />
-              <span className="display-footer__weather-current">{weatherDisplay.current}</span>
-            </div>
-          ) : (
-            <p className="display-footer__weather-empty">Weather unavailable</p>
-          )}
-        </div>
-        <p className="display-footer__copy display-footer__copy--clock">{clockLabel}</p>
+        <p className="display-footer__copy display-footer__copy--clock u-tabular-nums">
+          {clockLabel}
+        </p>
       </footer>
     </>
   );

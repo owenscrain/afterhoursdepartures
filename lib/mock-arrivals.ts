@@ -44,3 +44,18 @@ export const ADDISON_PREVIEW_ARRIVALS = [
     copyColor: "var(--color-text-secondary)",
   },
 ] as const;
+
+export const ADDISON_PREVIEW_BUS_ARRIVALS = [
+  {
+    id: "bus-east",
+    label: "East",
+    etaValue: "23",
+    etaUnit: "min",
+  },
+  {
+    id: "bus-west",
+    label: "West",
+    etaValue: "15",
+    etaUnit: "min",
+  },
+] as const;
