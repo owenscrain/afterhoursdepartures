@@ -48,7 +48,6 @@ function toDepartureItem(arrival: NormalizedArrival): DepartureItem {
 }
 
 function BrownLineDepartureRow({ departure }: { departure: DepartureItem }) {
-  const statusLabel = departure.isDelayed ? "Delayed" : null;
   const className = [
     styles.departure,
     departure.isScheduled ? styles.scheduledDeparture : null,
@@ -59,13 +58,10 @@ function BrownLineDepartureRow({ departure }: { departure: DepartureItem }) {
   return (
     <article
       className={className}
-      aria-label={`Brown Line to ${departure.destination}, ${departure.etaValue}${departure.etaUnit ? ` ${departure.etaUnit}` : ""}${departure.isScheduled ? ", scheduled" : ""}${statusLabel ? `, ${statusLabel}` : ""}`}
+      aria-label={`Brown Line to ${departure.destination}, ${departure.etaValue}${departure.etaUnit ? ` ${departure.etaUnit}` : ""}${departure.isScheduled ? ", scheduled" : ""}${departure.isDelayed ? ", delayed" : ""}`}
     >
       <div className={styles.departureCopy}>
         <p className={styles.destination}>{departure.destination}</p>
-        {statusLabel ? (
-          <p className={styles.status}>{statusLabel}</p>
-        ) : null}
       </div>
 
       <div className={`${styles.eta} u-tabular-nums`}>
