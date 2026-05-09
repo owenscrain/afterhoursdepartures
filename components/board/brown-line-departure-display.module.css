@@ -1,0 +1,128 @@
+.display {
+  background:
+    linear-gradient(to bottom, rgba(2, 16, 29, 0) 0%, rgba(2, 16, 29, 0.08) 52%, rgba(1, 11, 21, 0.66) 100%),
+    url("/signage/after-midnight.jpg") center / cover no-repeat;
+  display: grid;
+  height: 100dvh;
+  overflow: hidden;
+  padding: 0 clamp(1rem, 4vw, 2.5rem) clamp(1rem, 3.2dvh, 2.5rem);
+  place-items: end stretch;
+  width: 100vw;
+}
+
+.clock {
+  color: #fff8df;
+  font-family: var(--font-family-display);
+  font-size: clamp(2rem, 8.6vw, 4.45rem);
+  font-weight: var(--font-weight-bold);
+  justify-self: end;
+  letter-spacing: 0;
+  line-height: 0.9;
+  margin: clamp(1rem, 3dvh, 2.25rem) 0 0;
+  position: absolute;
+  right: clamp(1.25rem, 5vw, 3rem);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.58);
+  top: 0;
+  white-space: nowrap;
+}
+
+.departures {
+  display: grid;
+  gap: clamp(0.4rem, 1dvh, 0.8rem);
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  height: min(33dvh, 23rem);
+  margin: 0 auto;
+  max-width: 58rem;
+  width: 100%;
+}
+
+.departure,
+.empty {
+  background: var(--color-line-brown);
+  color: var(--color-text-on-route);
+}
+
+.departure {
+  align-items: center;
+  border-radius: 0;
+  box-shadow: 0 0.9rem 2.5rem rgba(0, 0, 0, 0.28);
+  display: grid;
+  gap: clamp(0.6rem, 2.2vw, 1.35rem);
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 0;
+  padding: clamp(0.45rem, 1.1dvh, 0.75rem) clamp(0.7rem, 2.4vw, 1.4rem);
+}
+
+.scheduledDeparture {
+  color: var(--color-text-muted);
+}
+
+.departureCopy {
+  min-width: 0;
+}
+
+.destination,
+.status {
+  margin: 0;
+}
+
+.destination {
+  font-family: var(--font-family-display);
+  font-size: clamp(2rem, 8.6vw, 4.45rem);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0;
+  line-height: 0.9;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status {
+  color: rgba(255, 255, 255, 0.78);
+  font-family: var(--font-family-ui);
+  font-size: clamp(0.7rem, 2.2vw, 1rem);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.08em;
+  line-height: 1;
+  margin-top: 0.2rem;
+  text-transform: uppercase;
+}
+
+.eta {
+  align-items: baseline;
+  display: inline-flex;
+  gap: 0.35rem;
+  justify-content: flex-end;
+  line-height: 1;
+  min-width: clamp(5rem, 22vw, 10rem);
+  white-space: nowrap;
+}
+
+.etaValue {
+  font-family: var(--font-family-display);
+  font-size: clamp(2rem, 8.6vw, 4.45rem);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0;
+  line-height: 0.9;
+}
+
+.etaUnit {
+  color: currentColor;
+  font-family: var(--font-family-ui);
+  font-size: clamp(0.95rem, 3vw, 1.55rem);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0;
+}
+
+.empty {
+  align-items: center;
+  border-radius: 0;
+  display: flex;
+  font-family: var(--font-family-display);
+  font-size: clamp(1.35rem, 4vw, 2.4rem);
+  font-weight: var(--font-weight-bold);
+  grid-row: 1 / -1;
+  justify-content: center;
+  padding: 1.5rem;
+  text-align: center;
+}
