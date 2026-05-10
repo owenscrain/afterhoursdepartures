@@ -58,7 +58,7 @@ function BrownLineDepartureRow({ departure }: { departure: DepartureItem }) {
   return (
     <article
       className={className}
-      aria-label={`Brown Line to ${departure.destination}, ${departure.etaValue}${departure.etaUnit ? ` ${departure.etaUnit}` : ""}${departure.isScheduled ? ", scheduled" : ""}${departure.isDelayed ? ", delayed" : ""}`}
+      aria-label={`Brown Line to ${departure.destination}, ${departure.etaValue}${departure.etaUnit ? ` ${departure.etaUnit}` : ""}${departure.isScheduled ? ", scheduled" : ""}`}
     >
       <div className={styles.departureCopy}>
         <p className={styles.destination}>{departure.destination}</p>
