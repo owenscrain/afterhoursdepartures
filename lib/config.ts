@@ -78,7 +78,8 @@ export const CTA_STATION_PRESETS = {
 export const DISPLAY_CONFIG = {
   station: CTA_STATION_PRESETS.addisonBrown,
   arrivals: {
-    maxRows: 4,
+    maxRows: 3,
+    lookaheadRows: 10,
     refreshIntervalMs: 15_000,
   },
   bus: {

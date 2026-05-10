@@ -2,12 +2,11 @@ import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
 
 import "../styles/tokens.css";
-import "../styles/board.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CTA Home Board",
-  description: "Chicago CTA arrivals board for a dedicated home display.",
+  title: "Brown Line Departures",
+  description: "After-hours Brown Line departure display.",
 };
 
 export const viewport: Viewport = {
